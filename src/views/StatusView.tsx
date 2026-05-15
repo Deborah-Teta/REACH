@@ -128,7 +128,7 @@ export const StatusView: React.FC = () => {
                         <MessageSquare size={14} />
                         <span className="text-[10px] font-bold uppercase tracking-wider">Official Response</span>
                       </div>
-                      <p className="text-sm italic text-zinc-600 dark:text-zinc-300">"{app.responseMessage}"</p>
+                      <p className="text-sm italic text-zinc-600 dark:text-zinc-300">&quot;{app.responseMessage}&quot;</p>
                     </div>
                   )}
                 </div>
@@ -203,7 +203,7 @@ export const StatusView: React.FC = () => {
           <div className="bg-white dark:bg-zinc-900 rounded-[40px] border border-dashed border-zinc-200 dark:border-zinc-800 p-20 text-center">
             <AlertCircle size={48} className="mx-auto mb-4 text-zinc-200" />
             <h3 className="text-xl font-bold mb-1">No applications yet</h3>
-            <p className="text-sm text-zinc-500">You haven't submitted any loan requests yet.</p>
+            <p className="text-sm text-zinc-500">You haven&apos;t submitted any loan requests yet.</p>
           </div>
         )}
       </div>

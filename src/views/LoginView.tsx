@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { LogIn, ShieldCheck, Zap, BarChart3, Lock } from 'lucide-react';
 
 export const LoginView: React.FC = () => {
@@ -72,7 +73,7 @@ export const LoginView: React.FC = () => {
               onClick={handleLogin}
               className="w-full py-4 px-6 bg-zinc-900 text-white rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-zinc-800 transition-all group"
             >
-              <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <Image src="https://www.google.com/favicon.ico" alt="Google" width={20} height={20} className="group-hover:scale-110 transition-transform" />
               Continue with Google
             </button>
             
@@ -93,7 +94,7 @@ export const LoginView: React.FC = () => {
           </div>
 
           <p className="mt-12 text-center text-xs text-zinc-400">
-            By signing in, you agree to REACH's <span className="underline underline-offset-4 cursor-pointer">Terms of Service</span> and <span className="underline underline-offset-4 cursor-pointer">Privacy Policy</span>.
+            By signing in, you agree to REACH&apos;s <span className="underline underline-offset-4 cursor-pointer">Terms of Service</span> and <span className="underline underline-offset-4 cursor-pointer">Privacy Policy</span>.
           </p>
         </motion.div>
       </div>

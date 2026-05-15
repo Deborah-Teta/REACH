@@ -128,7 +128,7 @@ export const StatusView: React.FC = () => {
                         <MessageSquare size={14} />
                         <span className="text-[10px] font-bold uppercase tracking-wider">Official Response</span>
                       </div>
-                      <p className="text-sm italic text-zinc-600 dark:text-zinc-300">"{app.responseMessage}"</p>
+                      <p className="text-sm italic text-zinc-600 dark:text-zinc-300">&quot;{app.responseMessage}&quot;</p>
                     </div>
                   )}
                 </div>

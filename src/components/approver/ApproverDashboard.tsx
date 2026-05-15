@@ -95,7 +95,7 @@ export const ApproverDashboard: React.FC<{ theme: 'light' | 'dark' | 'system' }>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-emerald-950 dark:text-emerald-50">Welcome back, Alex</h2>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-1"> Here's what's happening with your loan applications today.</p>
+          <p className="text-zinc-500 dark:text-zinc-400 mt-1"> Here&apos;s what&apos;s happening with your loan applications today.</p>
         </div>
         <div className="flex items-center gap-3">
           <button className="px-4 py-2 bg-white dark:bg-zinc-800 border border-emerald-100 dark:border-zinc-700 rounded-xl text-sm font-medium hover:bg-emerald-50 transition-colors">

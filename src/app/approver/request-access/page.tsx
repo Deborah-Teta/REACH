@@ -7,8 +7,6 @@ import { useRouter } from 'next/navigation';
 
 export default function RequestAccess() {
   const [fullName, setFullName] = useState('');
-  const [businessName, setBusinessName] = useState('');
-  const [tinNumber, setTinNumber] = useState('');
   const [reason, setReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -51,8 +49,6 @@ export default function RequestAccess() {
       id: Date.now().toString(),
       email: userData.email,
       fullName,
-      businessName,
-      tinNumber,
       reason,
       status: 'pending',
       submittedAt: new Date().toISOString()
@@ -90,8 +86,6 @@ export default function RequestAccess() {
               <div className="bg-gray-50 rounded-lg p-4 text-left">
                 <h3 className="font-semibold text-gray-900 mb-2">Request Details:</h3>
                 <p className="text-sm text-gray-600"><strong>Name:</strong> {fullName}</p>
-                <p className="text-sm text-gray-600"><strong>Business:</strong> {businessName}</p>
-                <p className="text-sm text-gray-600"><strong>TIN:</strong> {tinNumber}</p>
               </div>
               <button
                 onClick={() => router.push('/approver/login')}
@@ -138,40 +132,6 @@ export default function RequestAccess() {
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
                   placeholder="Enter your full name"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Business Name
-              </label>
-              <div className="relative">
-                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                  placeholder="Enter your business name"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                TIN Number
-              </label>
-              <div className="relative">
-                <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  value={tinNumber}
-                  onChange={(e) => setTinNumber(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                  placeholder="Enter your TIN number"
                   required
                 />
               </div>

@@ -208,7 +208,7 @@ export const ApplicantView: React.FC = () => {
               </div>
               <h3 className="text-3xl font-bold mb-4">Application Submitted!</h3>
               <p className="text-zinc-500 max-w-sm mx-auto mb-12">
-                We've received your request for {formData.amountRange}. Our team will review your application and notify you shortly.
+                We&apos;ve received your request for {formData.amountRange}. Our team will review your application and notify you shortly.
               </p>
               <button
                 onClick={() => {
