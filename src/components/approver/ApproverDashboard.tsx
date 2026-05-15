@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { 
   Users, 
   CheckCircle2, 
@@ -202,3 +202,4 @@ export const ApproverDashboard: React.FC<{ theme: 'light' | 'dark' | 'system' }>
     </div>
   );
 };
+

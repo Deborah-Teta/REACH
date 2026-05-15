@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { 
   Search, 
   Filter, 
@@ -477,3 +477,4 @@ export const ReviewsView: React.FC<{ theme: 'light' | 'dark' | 'system' }> = ({ 
     </div>
   );
 };
+

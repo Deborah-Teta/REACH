@@ -14,7 +14,7 @@ import {
   HelpCircle,
   ChevronRight
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme as useThemeHook } from '../../hooks/useTheme';
 
@@ -343,3 +343,4 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ theme: propTheme, se
     </div>
   );
 };
+

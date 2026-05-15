@@ -1,11 +1,20 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { CheckCircle2 } from "lucide-react"
+import { useState, useEffect, useMemo } from "react"
+import { CheckCircle2, PhoneCall, Mail } from "lucide-react"
+import { motion } from "framer-motion"
 
 import { Card, CardContent, CardHeader, CardDescription, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { getSubmittedApplications, type SubmittedApplication } from "@/lib/notificationStore"
+
+type ApplicationStep = {
+  title: string
+  description: string
+  completed: boolean
+  active?: boolean
+  date: string
+}
 
 const formatTimeAgo = (timestamp: string) => {
   const diff = Date.now() - new Date(timestamp).getTime()
@@ -17,7 +26,7 @@ const formatTimeAgo = (timestamp: string) => {
   return `${Math.floor(hours / 24)}d ago`
 }
 
-const getApplicationSteps = (status: SubmittedApplication['status']) => {
+const getApplicationSteps = (status: SubmittedApplication['status']): ApplicationStep[] => {
   const isPending = status === 'pending'
   const isApproved = status === 'approved'
   const isRejected = status === 'rejected'
@@ -119,7 +128,7 @@ export default function RealTimeTracker() {
     return () => window.clearInterval(interval)
   }, [application])
 
-  const steps = useMemo(() => getApplicationSteps(application?.status ?? 'pending'), [application])
+  const steps = useMemo<ApplicationStep[]>(() => getApplicationSteps(application?.status ?? 'pending'), [application])
   const statusTile = getStatusTile(application)
 
   return (

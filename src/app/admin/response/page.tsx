@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@/hooks/useTheme';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   ShieldCheck,
@@ -275,3 +275,4 @@ export default function AdminResponse() {
     </div>
   );
 }
+

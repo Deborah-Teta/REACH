@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Clock,
   CheckCircle,
@@ -210,3 +210,4 @@ export const StatusView: React.FC = () => {
     </div>
   );
 };
+

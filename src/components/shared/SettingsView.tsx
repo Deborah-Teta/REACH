@@ -14,7 +14,7 @@ import {
   HelpCircle,
   ChevronRight
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 interface SettingsViewProps {
   theme: 'light' | 'dark' | 'system';
@@ -203,3 +203,4 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ theme, setTheme, pro
     </div>
   );
 };
+

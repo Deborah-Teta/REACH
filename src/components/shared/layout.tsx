@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LayoutDashboard, 
   FileText, 
@@ -182,3 +182,4 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTa
     </div>
   );
 };
+

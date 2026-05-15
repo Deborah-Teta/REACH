@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@/hooks/useTheme';
 import { rdbData, rraData, crbData } from '@/lib/mockData';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import {
   CheckCircle2,
   TrendingUp,

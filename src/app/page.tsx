@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Sparkles, Clock, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Navbar } from '@/components/navbar';
 
 type UserRole = 'applicant' | 'approver' | 'admin';
 
@@ -70,6 +71,7 @@ export default function RootPage() {
 
   return (
     <div className="min-h-screen bg-emerald-50">
+      <Navbar />
       <div className="container mx-auto px-4 py-16 lg:py-24">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <motion.section
@@ -181,3 +183,4 @@ export default function RootPage() {
     </div>
   );
 }
+

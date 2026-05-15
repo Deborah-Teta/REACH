@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { LogIn, ShieldCheck, Zap, BarChart3, Lock } from 'lucide-react';
 
 export const LoginView: React.FC = () => {
@@ -100,3 +100,4 @@ export const LoginView: React.FC = () => {
     </div>
   );
 };
+
