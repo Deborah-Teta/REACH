@@ -6,13 +6,8 @@ import { useTheme } from '@/hooks/useTheme';
 import { motion } from 'framer-motion';
 import {
   AlertTriangle,
-  ShieldCheck,
-  MessageSquare,
   Bell,
   CheckCircle2,
-  XCircle,
-  Clock,
-  Send,
   RefreshCcw
 } from 'lucide-react';
 

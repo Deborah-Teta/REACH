@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from '@/hooks/useTheme';
 import { motion } from 'framer-motion';
 import {
-  Database,
   ShieldCheck,
   Clock,
   RefreshCcw,
