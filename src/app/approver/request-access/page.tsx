@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FileText, User, Building, Hash, Send, CheckCircle, Clock } from 'lucide-react';
+import { FileText, User, Send, CheckCircle, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function RequestAccess() {

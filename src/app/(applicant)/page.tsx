@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, ShieldCheck, Sparkles, Clock, UserPlus } from "lucide-react"
+import { ShieldCheck, Sparkles, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
