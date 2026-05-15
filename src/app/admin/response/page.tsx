@@ -61,7 +61,7 @@ export default function AdminResponse() {
   const [responseMessage, setResponseMessage] = useState('');
   const [responses, setResponses] = useState<ResponseEntry[]>([]);
   const router = useRouter();
-  const { theme, isLoaded } = useTheme();
+  const { isLoaded } = useTheme();
 
   useEffect(() => {
     const authData = localStorage.getItem('systemAdminAuth');

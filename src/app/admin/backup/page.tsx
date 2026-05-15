@@ -35,7 +35,7 @@ export default function AdminBackup() {
   const [selectedSchedule, setSelectedSchedule] = useState('daily');
   const [isBackingUp, setIsBackingUp] = useState(false);
   const router = useRouter();
-  const { theme, isLoaded } = useTheme();
+  const { isLoaded } = useTheme();
 
   useEffect(() => {
     const authData = localStorage.getItem('systemAdminAuth');

@@ -31,7 +31,7 @@ interface AccessRequest {
 export default function AccessManagement() {
   const [requests, setRequests] = useState<AccessRequest[]>([]);
   const router = useRouter();
-  const { theme, isLoaded } = useTheme();
+  const { isLoaded } = useTheme();
 
   useEffect(() => {
     // Check authentication
