@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eligibility Dashboard - REACH</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .dashboard-header {
+      background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+      color: white;
+      padding: var(--space-xl);
+      margin: -var(--space-md) -var(--space-md) var(--space-xl) -var(--space-md);
+    }
+
+    .dashboard-header h1 {
+      color: white;
+      margin-bottom: var(--space-sm);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .user-details h3 {
+      color: white;
+      margin: 0 0 2px 0;
+    }
+
+    .user-details p {
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+      font-size: var(--font-size-sm);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      text-align: center;
+    }
+
+    .stat-card.highlight {
+      background: linear-gradient(135deg, #e6f0ff 0%, #f5f9ff 100%);
+      border-color: var(--color-primary);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .stat-card.highlight .stat-value {
+      font-size: 2.5rem;
+    }
+
+    .eligibility-section {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .assessment-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .assessment-item:last-child {
+      border-bottom: none;
+    }
+
+    .assessment-left {
+      flex: 1;
+    }
+
+    .assessment-title {
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-xs);
+    }
+
+    .assessment-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+    }
+
+    .assessment-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .progress-ring {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .progress-circle {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+      border-radius: 50%;
+    }
+
+    .progress-circle-bg {
+      fill: none;
+      stroke: var(--color-border-light);
+      stroke-width: 4;
+    }
+
+    .progress-circle-fill {
+      fill: none;
+      stroke: var(--color-success);
+      stroke-width: 4;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-sm);
+    }
+
+    .breakdown {
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+    }
+
+    .breakdown-item:last-child {
+      margin-bottom: 0;
+      font-weight: var(--font-weight-semibold);
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-md);
+    }
+
+    .breakdown-label {
+      color: var(--color-text-secondary);
+    }
+
+    .breakdown-value {
+      color: var(--color-text);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .back-link:hover {
+      color: var(--color-primary-dark);
+    }
+
+    .info-box {
+      background: var(--color-info-light);
+      border-left: 4px solid var(--color-info);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .info-box p {
+      margin: 0;
+      color: #00838f;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="../index.html" class="navbar-logo">REACH</a>
+      <ul class="navbar-nav">
+        <li><a href="../index.html">Dashboard</a></li>
+        <li><a href="#">My Applications</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+      <div class="user-menu">
+        <span>👤 Nyarwaya Enterprises</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../index.html" class="back-link">← Back to Design System</a>
+
+    <div class="dashboard-header">
+      <div class="user-info">
+        <div class="user-avatar">🏢</div>
+        <div class="user-details">
+          <h3>Nyarwaya Enterprises Ltd</h3>
+          <p>Business ID: BID-123456789</p>
+        </div>
+      </div>
+      <h1>Your Eligibility Assessment</h1>
+      <p>Based on verified RRA tax history and business profile</p>
+    </div>
+
+    <!-- KEY METRICS -->
+    <div class="dashboard-grid">
+      <div class="stat-card highlight">
+        <div class="stat-value">$12,500</div>
+        <div class="stat-label">Eligible Loan Amount</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">85%</div>
+        <div class="stat-label">Eligibility Score</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">12-24 hrs</div>
+        <div class="stat-label">Expected Decision</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">✓</div>
+        <div class="stat-label">Tax Records Verified</div>
+      </div>
+    </div>
+
+    <!-- ASSESSMENT BREAKDOWN -->
+    <div class="eligibility-section">
+      <h2>Eligibility Assessment</h2>
+      
+      <div class="info-box">
+        <p><strong>ℹ️ How we calculated your eligibility:</strong> Your loan amount is based on your verified tax history from RRA (2023-2024 tax returns) combined with your stated business purpose. All figures come directly from government records—no estimates.</p>
+      </div>
+
+      <!-- ASSESSMENT ITEM 1 -->
+      <div class="assessment-item">
+        <div class="assessment-left">
+          <div class="assessment-title">Tax History Review</div>
+          <div class="assessment-desc">2023-2024 verified records from Rwanda Revenue Authority</div>
+        </div>
+        <div class="assessment-right">
+          <div style="text-align: right; margin-right: var(--space-lg);">
+            <div style="color: var(--color-success); font-weight: bold; margin-bottom: 4px;">✓ Verified</div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">$48,250 annual revenue</div>
+          </div>
+          <span class="badge badge-success">Complete</span>
+        </div>
+      </div>
+
+      <!-- ASSESSMENT ITEM 2 -->
+      <div class="assessment-item">
+        <div class="assessment-left">
+          <div class="assessment-title">Business Profile</div>
+          <div class="assessment-desc">RDB registration and business sector classification</div>
+        </div>
+        <div class="assessment-right">
+          <div style="text-align: right; margin-right: var(--space-lg);">
+            <div style="color: var(--color-success); font-weight: bold; margin-bottom: 4px;">✓ Verified</div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Retail - Active 3 years</div>
+          </div>
+          <span class="badge badge-success">Complete</span>
+        </div>
+      </div>
+
+      <!-- ASSESSMENT ITEM 3 -->
+      <div class="assessment-item">
+        <div class="assessment-left">
+          <div class="assessment-title">Loan Purpose Assessment</div>
+          <div class="assessment-desc">Your stated reason for the loan and use of capital</div>
+        </div>
+        <div class="assessment-right">
+          <div style="text-align: right; margin-right: var(--space-lg);">
+            <div style="color: var(--color-primary); font-weight: bold; margin-bottom: 4px;">→ Pending</div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Waiting for application</div>
+          </div>
+          <span class="badge badge-warning">Needed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOAN CALCULATION BREAKDOWN -->
+    <div class="eligibility-section">
+      <h2>Loan Calculation Breakdown</h2>
+      
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="breakdown-label">Average Annual Revenue (2023-2024)</span>
+          <span class="breakdown-value">$48,250</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Calculation Factor (26% of avg revenue)</span>
+          <span class="breakdown-value">×26%</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Base Eligible Amount</span>
+          <span class="breakdown-value">$12,545</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Loan Purpose Adjustment*</span>
+          <span class="breakdown-value">Pending</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Final Eligible Amount</span>
+          <span class="breakdown-value">$12,500</span>
+        </div>
+      </div>
+      
+      <p style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-top: var(--space-md); margin-bottom: 0;">
+        *Final amount may be adjusted based on your loan purpose and BRD assessment. These calculations are conservative and designed to ensure loan terms are sustainable for your business.
+      </p>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="eligibility-section">
+      <h2>Next Steps</h2>
+      
+      <div style="background: var(--color-bg-secondary); padding: var(--space-lg); border-radius: var(--radius-lg); margin-bottom: var(--space-lg);">
+        <ol style="color: var(--color-text-secondary); line-height: 1.8; padding-left: var(--space-lg);">
+          <li><strong>Complete Your Loan Request:</strong> Tell us your loan purpose, amount needed, and repayment timeline in the Loan Purpose Module.</li>
+          <li><strong>Submit for Review:</strong> Once submitted, your application goes to BRD for human assessment (12-24 hours).</li>
+          <li><strong>Track Status:</strong> Use the Real-Time Tracker to see where your application is in the review process.</li>
+          <li><strong>Final Decision:</strong> BRD will approve, request more info, or respectfully decline.</li>
+        </ol>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary">Complete Loan Application</button>
+        <button class="btn btn-secondary">View Real-Time Tracker</button>
+      </div>
+    </div>
+
+    <!-- ELIGIBILITY DETAILS -->
+    <div class="eligibility-section">
+      <h2>Eligibility Details</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg);">
+        <div>
+          <h4 style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: var(--space-sm);">Business Category</h4>
+          <p style="margin: 0; font-weight: var(--font-weight-semibold);">Retail & Commerce</p>
+        </div>
+        <div>
+          <h4 style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: var(--space-sm);">Years in Business</h4>
+          <p style="margin: 0; font-weight: var(--font-weight-semibold);">3 years</p>
+        </div>
+        <div>
+          <h4 style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: var(--space-sm);">Business Status</h4>
+          <p style="margin: 0; font-weight: var(--font-weight-semibold); color: var(--color-success);">✓ Active</p>
+        </div>
+        <div>
+          <h4 style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: var(--space-sm);">RRA Tax Status</h4>
+          <p style="margin: 0; font-weight: var(--font-weight-semibold); color: var(--color-success);">✓ Compliant</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="background-color: var(--color-text); color: white; padding: var(--space-xl) var(--space-md); text-align: center; margin-top: var(--space-3xl);">
+    <p style="color: white; margin-bottom: var(--space-sm);">&copy; 2026 REACH Platform. All rights reserved.</p>
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: var(--font-size-sm);">
+      Questions? Contact support@reach.rw or call +250-XXX-XXX-XXX
+    </p>
+  </footer>
+</body>
+</html>

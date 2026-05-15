@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Tracker - REACH</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .tracker-header {
+      background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+      color: white;
+      padding: var(--space-xl);
+      margin: -var(--space-md) -var(--space-md) var(--space-xl) -var(--space-md);
+      border-radius: 0;
+    }
+
+    .tracker-header h1 {
+      color: white;
+      margin-bottom: var(--space-sm);
+    }
+
+    .status-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .status-card {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+    }
+
+    .status-card.active {
+      background: linear-gradient(135deg, #e6f0ff 0%, #f5f9ff 100%);
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .status-card-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-sm);
+    }
+
+    .status-card-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-sm);
+    }
+
+    .status-card-time {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .timeline-container {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .timeline {
+      position: relative;
+      padding: var(--space-lg) 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-border-light);
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+      position: relative;
+    }
+
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-bg-tertiary);
+      border: 2px solid var(--color-border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-sm);
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-step.completed .timeline-marker {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+
+    .timeline-step.active .timeline-marker {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+      box-shadow: 0 0 0 8px var(--color-primary-light);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 8px var(--color-primary-light);
+      }
+      50% {
+        box-shadow: 0 0 0 12px rgba(0, 102, 204, 0.1);
+      }
+    }
+
+    .timeline-step.pending .timeline-marker {
+      background: white;
+      border-color: var(--color-border);
+    }
+
+    .timeline-content {
+      flex: 1;
+      padding-top: 4px;
+    }
+
+    .timeline-title {
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-xs);
+    }
+
+    .timeline-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .timeline-time {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .back-link:hover {
+      color: var(--color-primary-dark);
+    }
+
+    .info-section {
+      background: var(--color-info-light);
+      border-left: 4px solid var(--color-info);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    .info-section h3 {
+      color: #00838f;
+      margin-bottom: var(--space-md);
+    }
+
+    .info-section p {
+      color: #00838f;
+      margin-bottom: var(--space-sm);
+    }
+
+    .info-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .detail-item h4 {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-sm);
+    }
+
+    .detail-item p {
+      margin: 0;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+    }
+
+    .action-section {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+    }
+
+    .action-section h3 {
+      margin-bottom: var(--space-lg);
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="../index.html" class="navbar-logo">REACH</a>
+      <ul class="navbar-nav">
+        <li><a href="../index.html">Dashboard</a></li>
+        <li><a href="#">My Applications</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+      <div class="user-menu">
+        <span>👤 Nyarwaya Enterprises</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../index.html" class="back-link">← Back to Design System</a>
+
+    <div class="tracker-header">
+      <h1>Application Status Tracker</h1>
+      <p>Application ID: APP-2026-001254 | Submitted: May 3, 2026 at 2:45 PM</p>
+    </div>
+
+    <!-- STATUS OVERVIEW -->
+    <div class="status-overview">
+      <div class="status-card">
+        <div class="status-card-label">Application Status</div>
+        <div class="status-card-title" style="color: var(--color-primary);">🔄 In Review</div>
+        <div class="status-card-time">Updated 2 hours ago</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-card-label">Eligibility</div>
+        <div class="status-card-title" style="color: var(--color-success);">✓ Approved</div>
+        <div class="status-card-time">Loan eligible up to $12,500</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-card-label">Expected Decision</div>
+        <div class="status-card-title">May 4, 2026</div>
+        <div class="status-card-time">In approximately 8-12 hours</div>
+      </div>
+
+      <div class="status-card">
+        <div class="status-card-label">BRD Reviewer</div>
+        <div class="status-card-title">Grace Uwamariya</div>
+        <div class="status-card-time">Senior Credit Officer</div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="timeline-container">
+      <h2>Application Timeline</h2>
+      
+      <div class="timeline">
+        <!-- STEP 1 -->
+        <div class="timeline-step completed">
+          <div class="timeline-marker">✓</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Application Submitted</div>
+            <div class="timeline-desc">Your loan application was received and initial validation passed.</div>
+            <div class="timeline-time">May 3, 2026 at 2:45 PM</div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="timeline-step completed">
+          <div class="timeline-marker">✓</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Data Verification</div>
+            <div class="timeline-desc">Your Business ID was verified with RDB and tax records retrieved from RRA. All data confirmed authentic.</div>
+            <div class="timeline-time">May 3, 2026 at 2:52 PM</div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="timeline-step completed">
+          <div class="timeline-marker">✓</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Eligibility Assessment</div>
+            <div class="timeline-desc">Scoring algorithm calculated your eligible loan amount based on verified tax history and business profile.</div>
+            <div class="timeline-time">May 3, 2026 at 2:58 PM</div>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="timeline-step active">
+          <div class="timeline-marker">4</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Human Review by BRD</div>
+            <div class="timeline-desc">A BRD credit officer is reviewing your application, loan purpose, and business context. This step ensures human judgment considers factors the algorithm might miss.</div>
+            <div class="timeline-time">Started: May 3, 2026 at 4:15 PM (In progress)</div>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="timeline-step pending">
+          <div class="timeline-marker">5</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Final Decision</div>
+            <div class="timeline-desc">BRD will make their final approval or request additional information. Decision will be sent via email and SMS.</div>
+            <div class="timeline-time">Expected: May 4, 2026 by 11:59 PM</div>
+          </div>
+        </div>
+
+        <!-- STEP 6 -->
+        <div class="timeline-step pending">
+          <div class="timeline-marker">6</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Disbursement (If Approved)</div>
+            <div class="timeline-desc">If approved, funds will be transferred to your business bank account within 2-3 business days.</div>
+            <div class="timeline-time">Awaiting decision</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPLICATION DETAILS -->
+    <div class="info-section">
+      <h3>💡 What's Happening Now?</h3>
+      <p>
+        <strong>Grace Uwamariya</strong> from BRD is reviewing your application. She has access to:
+      </p>
+      <ul style="margin: 0; padding-left: var(--space-lg); color: #00838f;">
+        <li>Your verified tax records (2023-2024)</li>
+        <li>Your business registration details from RDB</li>
+        <li>Your stated loan purpose and business plan</li>
+        <li>Your eligibility score (85%)</li>
+      </ul>
+      <p style="margin-top: var(--space-md);">
+        Her role is to apply human judgment—to understand your business context and ensure the loan decision aligns with both your needs and BRD's lending criteria.
+      </p>
+    </div>
+
+    <!-- APPLICATION DETAILS -->
+    <div class="details-grid">
+      <div class="detail-item">
+        <h4>Application ID</h4>
+        <p>APP-2026-001254</p>
+      </div>
+      <div class="detail-item">
+        <h4>Submitted Date</h4>
+        <p>May 3, 2026</p>
+      </div>
+      <div class="detail-item">
+        <h4>Requested Amount</h4>
+        <p>$10,000</p>
+      </div>
+      <div class="detail-item">
+        <h4>Eligible Amount</h4>
+        <p>$12,500</p>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="action-section">
+      <h3>Need Help?</h3>
+      <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
+        While your application is being reviewed, here are some things you can do:
+      </p>
+      <div class="action-buttons">
+        <button class="btn btn-secondary">View Full Application</button>
+        <button class="btn btn-secondary">Download Receipt</button>
+        <button class="btn btn-ghost">Contact Support</button>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS SECTION -->
+    <div style="background: var(--color-bg-secondary); border: 1px dashed var(--color-border); border-radius: var(--radius-lg); padding: var(--space-xl); margin-top: var(--space-xl);">
+      <h3>📬 Notification Preferences</h3>
+      <p style="color: var(--color-text-secondary); margin-bottom: var(--space-lg);">
+        We'll notify you via:
+      </p>
+      <ul style="color: var(--color-text-secondary); line-height: 1.8; margin: 0; padding-left: var(--space-lg);">
+        <li><strong>Email:</strong> nyarwaya@business.com</li>
+        <li><strong>SMS:</strong> +250 7XX XXX XXX</li>
+        <li><strong>In-App:</strong> You'll see notifications here in real-time</li>
+      </ul>
+      <button class="btn btn-ghost" style="margin-top: var(--space-lg);">Update Preferences</button>
+    </div>
+  </main>
+
+  <footer style="background-color: var(--color-text); color: white; padding: var(--space-xl) var(--space-md); text-align: center; margin-top: var(--space-3xl);">
+    <p style="color: white; margin-bottom: var(--space-sm);">&copy; 2026 REACH Platform. All rights reserved.</p>
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: var(--font-size-sm);">
+      Questions? Contact support@reach.rw or call +250-XXX-XXX-XXX
+    </p>
+  </footer>
+</body>
+</html>

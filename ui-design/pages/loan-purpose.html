@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Purpose Module - REACH</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .module-header {
+      color: white;
+      padding: var(--space-xl);
+      margin: -var(--space-md) -var(--space-md) var(--space-xl) -var(--space-md);
+    }
+
+    .module-header h1 {
+      color: white;
+      margin-bottom: var(--space-sm);
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-sm);
+    }
+
+    .step.active {
+      background: white;
+      color: var(--color-primary);
+    }
+
+    .step-separator {
+      flex: 1;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .form-card {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .section-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-lg);
+      border-bottom: 2px solid var(--color-border-light);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .amount-slider {
+      margin: var(--space-md) 0;
+    }
+
+    .amount-slider input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--color-border-light);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .amount-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+
+    .amount-slider input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+      border: none;
+      box-shadow: var(--shadow-md);
+    }
+
+    .amount-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: var(--space-lg) 0;
+      padding: var(--space-lg);
+      background: var(--color-primary-light);
+      border-radius: var(--radius-lg);
+    }
+
+    .amount-display .amount {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-dark);
+    }
+
+    .amount-display .capacity {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .eligibility-card {
+      background: var(--color-success-light);
+      border-left: 4px solid var(--color-success);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .eligibility-card h4 {
+      color: #00662f;
+      margin-bottom: var(--space-sm);
+    }
+
+    .eligibility-card p {
+      color: #00662f;
+      margin: 0;
+      font-size: var(--font-size-sm);
+    }
+
+    .purpose-category {
+      background: var(--color-bg-secondary);
+      border: 2px solid transparent;
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .purpose-category:hover {
+      background: var(--color-bg-tertiary);
+    }
+
+    .purpose-category.selected {
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+    }
+
+    .purpose-category input[type="radio"] {
+      margin-right: var(--space-md);
+    }
+
+    .purpose-label {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .purpose-content strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .purpose-content span {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .timeline-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+
+    .timeline-content h4 {
+      margin: 0 0 4px 0;
+      font-size: var(--font-size-base);
+    }
+
+    .timeline-content p {
+      margin: 0;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .back-link:hover {
+      color: var(--color-primary-dark);
+    }
+
+    .summary-card {
+      background: var(--color-bg-secondary);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .summary-label {
+      color: var(--color-text-secondary);
+    }
+
+    .summary-value {
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    @media (max-width: 768px) {
+      .step-indicator {
+        display: none;
+      }
+
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="../index.html" class="navbar-logo">REACH</a>
+      <ul class="navbar-nav">
+        <li><a href="../index.html">Dashboard</a></li>
+        <li><a href="#">My Applications</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+      <div class="user-menu">
+        <span>👤 Nyarwaya Enterprises</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../index.html" class="back-link">← Back to Design System</a>
+
+    <div class="module-header">
+      <h1>Loan Purpose & Configuration</h1>
+      <p>Tell BRD exactly what you need and how you'll use this capital</p>
+      <div class="step-indicator">
+        <div class="step active">1</div>
+        <div class="step-separator"></div>
+        <div class="step">2</div>
+        <div class="step-separator"></div>
+        <div class="step">3</div>
+        <div class="step-separator"></div>
+        <div class="step">4</div>
+      </div>
+    </div>
+
+    <!-- STEP 1: LOAN AMOUNT -->
+    <div class="form-card">
+      <h2 class="section-title">Step 1: Select Your Loan Amount</h2>
+
+      <div class="eligibility-card">
+        <h4>✓ Your Eligibility</h4>
+        <p>Based on your verified tax history, you're eligible for up to <strong>$12,500</strong>. You can request any amount up to this limit.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="input-label input-required">How much do you need?</label>
+        
+        <div class="amount-display">
+          <span>Requesting:</span>
+          <span class="amount">$<span id="amountValue">5000</span></span>
+          <span class="capacity">of $12,500 max</span>
+        </div>
+
+        <div class="amount-slider">
+          <input type="range" min="1000" max="12500" step="100" value="5000" id="amountSlider" 
+                 oninput="updateAmount(this.value)" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--space-md); margin-top: var(--space-lg);">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setAmount(3000)">$3,000</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setAmount(5000)">$5,000</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setAmount(8000)">$8,000</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="setAmount(12500)">Max: $12,500</button>
+        </div>
+
+        <span class="input-hint" style="margin-top: var(--space-lg);">Only request what you actually need. A smaller, focused loan is often easier to manage and repay.</span>
+      </div>
+
+      <div style="background: var(--color-info-light); border-left: 4px solid var(--color-info); padding: var(--space-lg); border-radius: var(--radius-lg); margin-top: var(--space-lg);">
+        <p style="margin: 0; color: #00838f; font-size: var(--font-size-sm);">
+          <strong>💡 Tip:</strong> Requesting $5,000 instead of $12,500 shows discipline and lowers BRD's risk. If you succeed with this loan, you can apply for more later.
+        </p>
+      </div>
+    </div>
+
+    <!-- STEP 2: LOAN PURPOSE -->
+    <div class="form-card">
+      <h2 class="section-title">Step 2: Describe Your Loan Purpose</h2>
+
+      <div class="form-group">
+        <label class="input-label input-required">Primary use for this loan</label>
+
+        <div class="purpose-category" onclick="selectPurpose(this, 'working-capital')">
+          <label class="purpose-label">
+            <input type="radio" name="purpose" value="working-capital" />
+            <div class="purpose-content">
+              <strong>💼 Working Capital</strong>
+              <span>Employee salaries, rent, utilities, day-to-day operations</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="purpose-category" onclick="selectPurpose(this, 'equipment')">
+          <label class="purpose-label">
+            <input type="radio" name="purpose" value="equipment" />
+            <div class="purpose-content">
+              <strong>⚙️ Equipment & Machinery</strong>
+              <span>Computers, tools, manufacturing equipment, furniture</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="purpose-category" onclick="selectPurpose(this, 'inventory')">
+          <label class="purpose-label">
+            <input type="radio" name="purpose" value="inventory" />
+            <div class="purpose-content">
+              <strong>📦 Inventory & Stock</strong>
+              <span>Products to sell or materials for production</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="purpose-category" onclick="selectPurpose(this, 'expansion')">
+          <label class="purpose-label">
+            <input type="radio" name="purpose" value="expansion" />
+            <div class="purpose-content">
+              <strong>🚀 Expansion & Growth</strong>
+              <span>New location, additional services, market entry, hiring</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="purpose-category" onclick="selectPurpose(this, 'marketing')">
+          <label class="purpose-label">
+            <input type="radio" name="purpose" value="marketing" />
+            <div class="purpose-content">
+              <strong>📢 Marketing & Customer Acquisition</strong>
+              <span>Website, advertising, brand launch, online presence</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="input-label input-required">Detailed explanation of how you'll use this loan</label>
+        <textarea placeholder="Be specific. Example: 'I'll use $5,000 to purchase 200 units of our bestselling product at wholesale price. With our current profit margin of 40%, this will generate $4,000 in profit within 30 days, allowing me to repay the loan quickly and reinvest in more inventory.'" required></textarea>
+        <span class="input-hint">BRD reviewers read this to ensure the loan use is sound and you can repay it</span>
+      </div>
+    </div>
+
+    <!-- STEP 3: REPAYMENT TIMELINE -->
+    <div class="form-card">
+      <h2 class="section-title">Step 3: Repayment Timeline</h2>
+
+      <div class="form-group">
+        <label class="input-label input-required">How long would you like to repay this loan?</label>
+
+        <div class="purpose-category" onclick="selectTimeline(this, '6months')">
+          <label class="purpose-label">
+            <input type="radio" name="timeline" value="6months" />
+            <div class="purpose-content">
+              <strong>6 Months</strong>
+              <span>Higher monthly payments, but you're loan-free sooner and pay less interest</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="purpose-category" onclick="selectTimeline(this, '12months')">
+          <label class="purpose-label">
+            <input type="radio" name="timeline" value="12months" checked />
+            <div class="purpose-content">
+              <strong>12 Months</strong>
+              <span>Balanced approach—manageable monthly payments with moderate interest</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="purpose-category" onclick="selectTimeline(this, '24months')">
+          <label class="purpose-label">
+            <input type="radio" name="timeline" value="24months" />
+            <div class="purpose-content">
+              <strong>24 Months</strong>
+              <span>Lower monthly payments, but you'll pay more interest over time</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div style="background: var(--color-bg-secondary); padding: var(--space-lg); border-radius: var(--radius-lg); margin-top: var(--space-lg);">
+        <h4 style="margin-top: 0;">Estimated Monthly Payment (at 14% annual rate)</h4>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md);">
+          <div style="text-align: center; padding: var(--space-md); background: white; border-radius: var(--radius-md);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-bottom: 4px;">6 Months</div>
+            <div style="font-size: var(--font-size-lg); font-weight: bold; color: var(--color-primary);">$877/mo</div>
+          </div>
+          <div style="text-align: center; padding: var(--space-md); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-bottom: 4px;">12 Months</div>
+            <div style="font-size: var(--font-size-lg); font-weight: bold; color: var(--color-primary);">$439/mo</div>
+          </div>
+          <div style="text-align: center; padding: var(--space-md); background: white; border-radius: var(--radius-md);">
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); margin-bottom: 4px;">24 Months</div>
+            <div style="font-size: var(--font-size-lg); font-weight: bold; color: var(--color-primary);">$235/mo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: FINAL CONFIRMATION -->
+    <div class="form-card">
+      <h2 class="section-title">Step 4: Review & Submit</h2>
+
+      <div class="summary-card">
+        <div class="summary-item">
+          <span class="summary-label">Loan Amount Requested</span>
+          <span class="summary-value">$<span id="summaryAmount">5000</span></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Eligibility Status</span>
+          <span class="summary-value" style="color: var(--color-success);">✓ Eligible</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Requested Purpose</span>
+          <span class="summary-value" id="summaryPurpose">Not yet selected</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Repayment Period</span>
+          <span class="summary-value" id="summaryTimeline">12 Months</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Monthly Payment</span>
+          <span class="summary-value" id="summaryPayment">$439</span>
+        </div>
+      </div>
+
+      <div style="background: var(--color-warning-light); border-left: 4px solid var(--color-warning); padding: var(--space-lg); border-radius: var(--radius-lg); margin-bottom: var(--space-lg);">
+        <p style="margin: 0; color: #e65100; font-size: var(--font-size-sm);">
+          <strong>⚠️ Before you submit:</strong> Double-check that your monthly payment fits comfortably in your business budget. BRD will review your application within 12-24 hours. If approved, funds will be transferred to your account within 2-3 business days.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; align-items: flex-start; gap: var(--space-md);">
+          <input type="checkbox" id="confirm" required />
+          <label for="confirm" style="margin: 0;">
+            <strong>I confirm that all information is accurate and I understand the loan terms</strong>
+          </label>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-secondary" onclick="goBack()">← Back</button>
+        <button class="btn btn-primary" id="submitBtn" onclick="submitApplication()" disabled>
+          Submit Application
+        </button>
+      </div>
+    </div>
+
+    <!-- TIMELINE DISPLAY -->
+    <div class="form-card" style="background: var(--color-bg-secondary); border: none; box-shadow: none;">
+      <h3 style="margin-bottom: var(--space-lg);">What Happens Next?</h3>
+      
+      <div class="timeline-item">
+        <div class="timeline-icon">1</div>
+        <div class="timeline-content">
+          <h4>Application Submitted</h4>
+          <p>Your loan application is received and initial validation is performed (immediate)</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-icon">2</div>
+        <div class="timeline-content">
+          <h4>Data Verification</h4>
+          <p>REACH verifies your data with RRA and RDB automatically (within 5 minutes)</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-icon">3</div>
+        <div class="timeline-content">
+          <h4>Human Review</h4>
+          <p>A BRD credit officer reviews your application and loan purpose (12-24 hours)</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-icon">4</div>
+        <div class="timeline-content">
+          <h4>Final Decision</h4>
+          <p>You'll receive approval, request for more info, or respectful decline via email & SMS</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-icon">5</div>
+        <div class="timeline-content">
+          <h4>Funds Disbursed</h4>
+          <p>If approved, money transfers to your account within 2-3 business days</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer style="background-color: var(--color-text); color: white; padding: var(--space-xl) var(--space-md); text-align: center; margin-top: var(--space-3xl);">
+    <p style="color: white; margin-bottom: var(--space-sm);">&copy; 2026 REACH Platform. All rights reserved.</p>
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: var(--font-size-sm);">
+      Questions? Contact support@reach.rw or call +250-XXX-XXX-XXX
+    </p>
+  </footer>
+
+  <script>
+    function updateAmount(value) {
+      document.getElementById('amountValue').textContent = Number(value).toLocaleString();
+      document.getElementById('summaryAmount').textContent = Number(value).toLocaleString();
+    }
+
+    function setAmount(amount) {
+      document.getElementById('amountSlider').value = amount;
+      updateAmount(amount);
+    }
+
+    function selectPurpose(element, value) {
+      document.querySelectorAll('.purpose-category').forEach(cat => {
+        cat.classList.remove('selected');
+      });
+      element.classList.add('selected');
+      element.querySelector('input[type="radio"]').checked = true;
+      document.getElementById('summaryPurpose').textContent = element.querySelector('strong').textContent;
+      enableSubmit();
+    }
+
+    function selectTimeline(element, value) {
+      document.querySelectorAll('[name="timeline"]').forEach(radio => {
+        radio.parentElement.parentElement.classList.remove('selected');
+      });
+      element.classList.add('selected');
+      element.querySelector('input[type="radio"]').checked = true;
+      document.getElementById('summaryTimeline').textContent = element.querySelector('strong').textContent;
+      
+      const monthMap = { '6months': '$877', '12months': '$439', '24months': '$235' };
+      document.getElementById('summaryPayment').textContent = monthMap[value];
+      enableSubmit();
+    }
+
+    function enableSubmit() {
+      const confirm = document.getElementById('confirm').checked;
+      const purpose = document.querySelector('input[name="purpose"]:checked');
+      document.getElementById('submitBtn').disabled = !(confirm && purpose);
+    }
+
+    document.getElementById('confirm').addEventListener('change', enableSubmit);
+
+    function submitApplication() {
+      alert('Demo: Loan application submitted! Track your status in the Real-Time Tracker.');
+    }
+
+    function goBack() {
+      window.scrollTo(0, 0);
+    }
+  </script>
+</body>
+</html>

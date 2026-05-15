@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REACH - Loan Application Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+      color: white;
+      padding: var(--space-3xl) var(--space-md);
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .hero h1 {
+      color: white;
+      margin-bottom: var(--space-lg);
+    }
+
+    .hero p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-xl);
+      margin-bottom: var(--space-3xl);
+    }
+
+    .module-card {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      text-align: center;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .module-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .module-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .module-card h3 {
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+
+    .module-card p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-lg);
+    }
+
+    .design-system-section {
+      margin-top: var(--space-3xl);
+      padding-top: var(--space-3xl);
+      border-top: 2px solid var(--color-border-light);
+    }
+
+    .design-tokens {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .token-group h4 {
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-md);
+      font-size: var(--font-size-sm);
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+
+    .token {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+
+    .color-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .components-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .component-box {
+      background: var(--color-bg-secondary);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--color-border);
+    }
+
+    .component-box h4 {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-md);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="index.html" class="navbar-logo">REACH</a>
+      <ul class="navbar-nav">
+        <li><a href="#modules">Modules</a></li>
+        <li><a href="#design-system">Design System</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>REACH Platform - UI Design System</h1>
+        <p>Fast, secure, and accessible loan applications for Rwandan entrepreneurs</p>
+        <p style="font-size: var(--font-size-base); margin: 0; opacity: 0.9;">
+          No paperwork. No forged documents. No waiting. Just verified data.
+        </p>
+      </div>
+    </section>
+
+    <div class="container">
+      <section id="modules">
+        <h2 style="margin-bottom: var(--space-xl);">Application Modules</h2>
+        <div class="modules-grid">
+          <a href="pages/identity-portal.html" style="text-decoration: none; color: inherit;">
+            <div class="module-card">
+              <div class="module-icon">🔐</div>
+              <h3>Identity Portal</h3>
+              <p>Secure login and registration with Business ID verification and multi-language support (English & Kinyarwanda)</p>
+              <button class="btn btn-primary btn-sm">View Module</button>
+            </div>
+          </a>
+
+          <a href="pages/eligibility-dashboard.html" style="text-decoration: none; color: inherit;">
+            <div class="module-card">
+              <div class="module-icon">📊</div>
+              <h3>Eligibility Dashboard</h3>
+              <p>Real-time loan qualification assessment based on RRA tax history and business profile data</p>
+              <button class="btn btn-primary btn-sm">View Module</button>
+            </div>
+          </a>
+
+          <a href="pages/real-time-tracker.html" style="text-decoration: none; color: inherit;">
+            <div class="module-card">
+              <div class="module-icon">⏱️</div>
+              <h3>Real-Time Tracker</h3>
+              <p>Live application status updates from submission through BRD assessment and final decision</p>
+              <button class="btn btn-primary btn-sm">View Module</button>
+            </div>
+          </a>
+
+          <a href="pages/narrative-form.html" style="text-decoration: none; color: inherit;">
+            <div class="module-card">
+              <div class="module-icon">📝</div>
+              <h3>Early-Stage Narrative Form</h3>
+              <p>Structured form for business description and loan purpose in English or Kinyarwanda</p>
+              <button class="btn btn-primary btn-sm">View Module</button>
+            </div>
+          </a>
+
+          <a href="pages/loan-purpose.html" style="text-decoration: none; color: inherit;">
+            <div class="module-card">
+              <div class="module-icon">💰</div>
+              <h3>Loan Purpose Module</h3>
+              <p>Detailed loan request configuration with amount, timeline, and business-specific details</p>
+              <button class="btn btn-primary btn-sm">View Module</button>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="design-system" class="design-system-section">
+        <h2>Design System Foundation</h2>
+        
+        <h3 style="margin-top: var(--space-2xl); margin-bottom: var(--space-lg);">Color Palette</h3>
+        <div class="design-tokens">
+          <div class="token-group">
+            <h4>Primary</h4>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #0066cc;"></div>
+              <span>#0066cc</span>
+            </div>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #004499;"></div>
+              <span>#004499</span>
+            </div>
+          </div>
+
+          <div class="token-group">
+            <h4>Semantic</h4>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #00a86b;"></div>
+              <span>Success</span>
+            </div>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #ff9800;"></div>
+              <span>Warning</span>
+            </div>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #d32f2f;"></div>
+              <span>Error</span>
+            </div>
+          </div>
+
+          <div class="token-group">
+            <h4>Neutral</h4>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #1a202c;"></div>
+              <span>Text</span>
+            </div>
+            <div class="token">
+              <div class="color-swatch" style="background-color: #f5f7fa;"></div>
+              <span>Background</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: var(--space-2xl); margin-bottom: var(--space-lg);">Component Library</h3>
+        <div class="components-showcase">
+          <div class="component-box">
+            <h4>Buttons</h4>
+            <div style="display: flex; gap: var(--space-sm); flex-direction: column;">
+              <button class="btn btn-primary">Primary Button</button>
+              <button class="btn btn-secondary">Secondary Button</button>
+              <button class="btn btn-ghost">Ghost Button</button>
+            </div>
+          </div>
+
+          <div class="component-box">
+            <h4>Badges & Status</h4>
+            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+              <span class="badge badge-success">Approved</span>
+              <span class="badge badge-warning">Pending</span>
+              <span class="badge badge-error">Rejected</span>
+              <span class="badge badge-info">Processing</span>
+            </div>
+          </div>
+
+          <div class="component-box">
+            <h4>Alerts</h4>
+            <div class="alert alert-success">✓ Application submitted successfully</div>
+          </div>
+
+          <div class="component-box">
+            <h4>Form Elements</h4>
+            <div class="input-group">
+              <label class="input-label input-required">Business ID</label>
+              <input type="text" placeholder="Enter your Business ID" />
+            </div>
+          </div>
+
+          <div class="component-box">
+            <h4>Cards</h4>
+            <div class="card" style="margin-bottom: 0;">
+              <div class="stat-number">$5,000</div>
+              <div class="stat-label">Eligible Loan Amount</div>
+            </div>
+          </div>
+
+          <div class="component-box">
+            <h4>Progress</h4>
+            <div class="progress">
+              <div class="progress-bar" style="width: 60%;"></div>
+            </div>
+            <p style="font-size: var(--font-size-sm); margin-top: var(--space-sm); margin-bottom: 0;">60% Complete</p>
+          </div>
+        </div>
+
+        <div style="background: var(--color-primary-light); padding: var(--space-lg); border-radius: var(--radius-lg); margin-top: var(--space-2xl);">
+          <h3 style="color: var(--color-primary-dark); margin-bottom: var(--space-md);">Design Principles</h3>
+          <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+            <li><strong>Mobile-First:</strong> All components optimized for mobile, then scale up</li>
+            <li><strong>Accessibility:</strong> WCAG 2.1 AA compliance with keyboard navigation and screen reader support</li>
+            <li><strong>Professional:</strong> Clean, corporate aesthetic suitable for financial institution</li>
+            <li><strong>User-Centric:</strong> Simple, intuitive navigation focused on user needs</li>
+            <li><strong>Responsive:</strong> Works seamlessly on all devices from 320px to 1920px</li>
+            <li><strong>Data-Driven:</strong> Clear visual hierarchy for financial data presentation</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer style="background-color: var(--color-text); color: white; padding: var(--space-xl) var(--space-md); text-align: center; margin-top: var(--space-3xl);">
+    <p style="color: white; margin-bottom: var(--space-sm);">&copy; 2026 REACH Platform. All rights reserved.</p>
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: var(--font-size-sm);">
+      Connecting Rwandan entrepreneurs to capital through verified data, not paperwork.
+    </p>
+  </footer>
+</body>
+</html>

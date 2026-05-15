@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Early-Stage Narrative Form - REACH</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .form-header {
+      background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+      color: white;
+      padding: var(--space-xl);
+      margin: -var(--space-md) -var(--space-md) var(--space-xl) -var(--space-md);
+    }
+
+    .form-header h1 {
+      color: white;
+      margin-bottom: var(--space-sm);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-full);
+      margin-top: var(--space-lg);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: white;
+      width: 40%;
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease;
+    }
+
+    .form-card {
+      background: white;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .form-section {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-section-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-lg);
+      border-bottom: 2px solid var(--color-border-light);
+    }
+
+    .form-description {
+      background: var(--color-bg-secondary);
+      border-left: 4px solid var(--color-info);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-description p {
+      margin: 0;
+      color: #00838f;
+      font-size: var(--font-size-sm);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .radio-item,
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .radio-item input[type="radio"],
+    .checkbox-item input[type="checkbox"] {
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .radio-label,
+    .checkbox-label {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .radio-label strong,
+    .checkbox-label strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .radio-description,
+    .checkbox-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-tertiary);
+    }
+
+    .character-count {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      margin-top: var(--space-xs);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .back-link:hover {
+      color: var(--color-primary-dark);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: space-between;
+      margin-top: var(--space-2xl);
+    }
+
+    .success-banner {
+      background: var(--color-success-light);
+      border-left: 4px solid var(--color-success);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+      display: none;
+    }
+
+    .success-banner.show {
+      display: block;
+    }
+
+    .success-banner p {
+      color: #00662f;
+      margin: 0;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .hint-text {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-tertiary);
+      margin-top: var(--space-sm);
+      font-style: italic;
+    }
+
+    .field-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .form-header {
+        padding: var(--space-lg);
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .form-actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="navbar">
+      <a href="../index.html" class="navbar-logo">REACH</a>
+      <ul class="navbar-nav">
+        <li><a href="../index.html">Dashboard</a></li>
+        <li><a href="#">My Applications</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+      <div class="user-menu">
+        <span>👤 Tech Innovators Inc</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../index.html" class="back-link">← Back to Design System</a>
+
+    <div class="form-header">
+      <h1>Early-Stage Business Application</h1>
+      <p>Tell us about your business idea and why you need this loan</p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="success-banner" id="successBanner">
+      <p>✓ Application saved! Your responses are automatically saved as you type.</p>
+    </div>
+
+    <form id="narrativeForm" onsubmit="handleFormSubmit(event)">
+      <!-- SECTION 1: BUSINESS FOUNDATION -->
+      <div class="form-card">
+        <div class="form-section">
+          <div class="form-section-title">About Your Business</div>
+
+          <div class="form-group">
+            <label class="input-label input-required">Business Name</label>
+            <input type="text" placeholder="What is your business called?" required />
+            <span class="hint-text">This should match your RDB registration or intended business name</span>
+          </div>
+
+          <div class="field-group">
+            <div class="form-group">
+              <label class="input-label input-required">Type of Business</label>
+              <select required>
+                <option value="">-- Select a category --</option>
+                <option value="tech">Technology / Software</option>
+                <option value="retail">Retail & Commerce</option>
+                <option value="manufacturing">Manufacturing</option>
+                <option value="agriculture">Agriculture & Agribusiness</option>
+                <option value="services">Services (Consulting, Design, etc.)</option>
+                <option value="hospitality">Hospitality & Tourism</option>
+                <option value="education">Education & Training</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="input-label input-required">Stage of Business</label>
+              <select required>
+                <option value="">-- Select a stage --</option>
+                <option value="ideation">Ideation Phase (Concept only)</option>
+                <option value="pre-launch">Pre-Launch (Planning & preparation)</option>
+                <option value="launched-6mo">Launched (Less than 6 months)</option>
+                <option value="launched-1yr">Operating (6-12 months)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">Tell us about your business idea</label>
+            <textarea placeholder="What problem does your business solve? Who are your customers? What makes you different? (Write in English or Kinyarwanda)" required onkeyup="updateCharCount(this, 'ideaCount')"></textarea>
+            <div class="character-count"><span id="ideaCount">0</span>/500 characters</div>
+            <span class="hint-text">BRD assessors read this to understand your business model and market potential</span>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label">Team & Experience</label>
+            <textarea placeholder="Who is on your team? What relevant experience do you have? What skills are you bringing?" onkeyup="updateCharCount(this, 'teamCount')"></textarea>
+            <div class="character-count"><span id="teamCount">0</span>/300 characters</div>
+            <span class="hint-text">Help BRD understand your capability to execute this business plan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: MARKET & REVENUE -->
+      <div class="form-card">
+        <div class="form-section">
+          <div class="form-section-title">Market & Revenue Projections</div>
+
+          <div class="form-description">
+            <p>
+              These projections help BRD understand if your business model is viable. Be realistic—we value honesty over optimism.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">Who are your target customers?</label>
+            <textarea placeholder="Describe your ideal customer. Who will buy from you? (e.g., small restaurants, schools, individual consumers)" required onkeyup="updateCharCount(this, 'customerCount')"></textarea>
+            <div class="character-count"><span id="customerCount">0</span>/300 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">Expected monthly revenue (first 12 months)</label>
+            <input type="text" placeholder="e.g., $500-1000 per month" required />
+            <span class="hint-text">This is an estimate; it helps BRD assess feasibility and loan repayment ability</span>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">What is your competitive advantage?</label>
+            <textarea placeholder="What will make customers choose you over existing solutions? Price? Quality? Innovation? Speed?" required onkeyup="updateCharCount(this, 'compCount')"></textarea>
+            <div class="character-count"><span id="compCount">0</span>/250 characters</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: LOAN PURPOSE -->
+      <div class="form-card">
+        <div class="form-section">
+          <div class="form-section-title">Your Loan Purpose</div>
+
+          <div class="form-description">
+            <p>
+              Tell us specifically how you'll use this loan. BRD approves loans based partly on whether the use is sound and the business can repay.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">What will you use this loan for?</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="use-equipment" name="loanUse" value="equipment" />
+                <label for="use-equipment" class="checkbox-label">
+                  <strong>Equipment & Machinery</strong>
+                  <span class="checkbox-description">Computers, tools, furniture, or other business equipment</span>
+                </label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="use-inventory" name="loanUse" value="inventory" />
+                <label for="use-inventory" class="checkbox-label">
+                  <strong>Inventory & Stock</strong>
+                  <span class="checkbox-description">Products or materials to sell</span>
+                </label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="use-working" name="loanUse" value="working-capital" />
+                <label for="use-working" class="checkbox-label">
+                  <strong>Working Capital</strong>
+                  <span class="checkbox-description">Cash to pay employees, rent, utilities during startup phase</span>
+                </label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="use-marketing" name="loanUse" value="marketing" />
+                <label for="use-marketing" class="checkbox-label">
+                  <strong>Marketing & Launch</strong>
+                  <span class="checkbox-description">Website, advertising, brand launch, customer acquisition</span>
+                </label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="use-expansion" name="loanUse" value="expansion" />
+                <label for="use-expansion" class="checkbox-label">
+                  <strong>Expansion & Growth</strong>
+                  <span class="checkbox-description">New location, additional staff, service expansion</span>
+                </label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="use-other" name="loanUse" value="other" />
+                <label for="use-other" class="checkbox-label">
+                  <strong>Other</strong>
+                  <span class="checkbox-description">Please describe below</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">Describe how this loan will help your business grow</label>
+            <textarea placeholder="Example: 'I'll use the $5,000 to buy a commercial stove and serving equipment, allowing me to serve hot meals at local events. This will increase revenue from $500 to $2,000/month within 6 months.'" required onkeyup="updateCharCount(this, 'impactCount')"></textarea>
+            <div class="character-count"><span id="impactCount">0</span>/500 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">When will this loan help your business start making money?</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="timeline-immediate" name="timeline" value="immediate" required />
+                <label for="timeline-immediate" class="radio-label">
+                  <strong>Immediately</strong>
+                  <span class="radio-description">This loan enables immediate revenue (e.g., buy inventory to start selling)</span>
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="timeline-weeks" name="timeline" value="weeks" />
+                <label for="timeline-weeks" class="radio-label">
+                  <strong>Within 1-4 weeks</strong>
+                  <span class="radio-description">After setup and initial preparation</span>
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="timeline-months" name="timeline" value="months" />
+                <label for="timeline-months" class="radio-label">
+                  <strong>Within 1-3 months</strong>
+                  <span class="radio-description">After training, licensing, or market preparation</span>
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="timeline-longer" name="timeline" value="longer" />
+                <label for="timeline-longer" class="radio-label">
+                  <strong>3+ months</strong>
+                  <span class="radio-description">Long-term investment with delayed revenue</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: REPAYMENT CONFIDENCE -->
+      <div class="form-card">
+        <div class="form-section">
+          <div class="form-section-title">Repayment Plan</div>
+
+          <div class="form-description">
+            <p>
+              BRD wants to know how confident you are that your business will generate enough income to repay the loan on time.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">After 6 months, how much monthly revenue do you expect?</label>
+            <input type="text" placeholder="e.g., $1,500/month" required />
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">How will you prioritize loan repayment?</label>
+            <textarea placeholder="Example: 'I will set aside 15% of daily sales specifically for loan repayment. If my business makes $1,500/month, that's $225 for the loan, which fits comfortably in my budget.'" required onkeyup="updateCharCount(this, 'repayCount')"></textarea>
+            <div class="character-count"><span id="repayCount">0</span>/400 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">What risks could affect your business or repayment ability?</label>
+            <textarea placeholder="Be honest about potential challenges: seasonal variations, competition, supply chain issues, etc." required onkeyup="updateCharCount(this, 'riskCount')"></textarea>
+            <div class="character-count"><span id="riskCount">0</span>/400 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label input-required">How will you overcome these risks?</label>
+            <textarea placeholder="Example: 'I'll diversify revenue streams by serving both individual customers and corporate events. I'll also maintain a 2-month cash reserve.'" required onkeyup="updateCharCount(this, 'mitigationCount')"></textarea>
+            <div class="character-count"><span id="mitigationCount">0</span>/400 characters</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: AGREEMENT -->
+      <div class="form-card">
+        <div class="form-section">
+          <div class="form-section-title">Declaration & Agreement</div>
+
+          <div class="form-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="truthful" name="agreement" required />
+              <label for="truthful" class="checkbox-label">
+                <strong>I declare that all information provided is truthful and accurate</strong>
+                <span class="checkbox-description">Providing false information may result in loan denial or legal consequences</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="data-share" name="agreement" required />
+              <label for="data-share" class="checkbox-label">
+                <strong>I consent to REACH verifying my information with RRA and RDB</strong>
+                <span class="checkbox-description">This is required to assess your eligibility and prevent fraud</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="terms-agree" name="agreement" required />
+              <label for="terms-agree" class="checkbox-label">
+                <strong>I agree to the REACH Terms of Service and Privacy Policy</strong>
+                <span class="checkbox-description"><a href="#" style="color: var(--color-primary);">Read our terms</a></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="saveDraft()">Save Draft</button>
+        <button type="submit" class="btn btn-success">Submit Application</button>
+      </div>
+    </form>
+  </main>
+
+  <footer style="background-color: var(--color-text); color: white; padding: var(--space-xl) var(--space-md); text-align: center; margin-top: var(--space-3xl);">
+    <p style="color: white; margin-bottom: var(--space-sm);">&copy; 2026 REACH Platform. All rights reserved.</p>
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: var(--font-size-sm);">
+      Questions? Contact support@reach.rw or call +250-XXX-XXX-XXX
+    </p>
+  </footer>
+
+  <script>
+    function updateCharCount(textarea, countId) {
+      const count = textarea.value.length;
+      document.getElementById(countId).textContent = count;
+    }
+
+    function saveDraft() {
+      document.getElementById('successBanner').classList.add('show');
+      setTimeout(() => {
+        document.getElementById('successBanner').classList.remove('show');
+      }, 3000);
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      alert('Demo: Your early-stage business narrative has been submitted! BRD will review and provide feedback within 24 hours.');
+    }
+  </script>
+</body>
+</html>
